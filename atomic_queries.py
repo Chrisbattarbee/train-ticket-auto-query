@@ -352,6 +352,7 @@ def _query_route(routeId: str = '92708982-77af-4318-be25-57ccb0ff69ad', headers:
 
     if res.status_code == 200:
         print(f"query {routeId} success")
+        print (res.text)
     else:
         print(f"query {routeId} fail")
 
