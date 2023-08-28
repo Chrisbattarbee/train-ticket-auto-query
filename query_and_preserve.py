@@ -1,5 +1,5 @@
 from atomic_queries import _query_high_speed_ticket, _query_normal_ticket, _query_assurances, _query_food, _query_contacts
-from utils import random_boolean, random_phone, random_str, random_form_list
+from utils import random_boolean, random_phone, random_str, random_from_list
 
 import logging
 import random
@@ -11,7 +11,7 @@ logger = logging.getLogger("query_and_preserve")
 uuid = "4d2a46c7-71cb-4cf1-b5bb-b68406d9da6f"
 date = time.strftime("%Y-%m-%d", time.localtime())
 
-base_address = "http://139.196.152.44:31000"
+base_address = "http://localhost:8080"
 
 
 def query_and_preserve(headers):
@@ -55,13 +55,13 @@ def query_and_preserve(headers):
         "tripId": ""
     }
 
-    trip_id = random_form_list(trip_ids)
+    trip_id = random_from_list(trip_ids)
     base_preserve_payload["tripId"] = trip_id
 
     need_food = random_boolean()
     if need_food:
         logger.info("need food")
-        food_dict = random_form_list(food_result)
+        food_dict = random_from_list(food_result)
         base_preserve_payload.update(food_dict)
     else:
         logger.info("not need food")
@@ -71,11 +71,11 @@ def query_and_preserve(headers):
     if need_assurance:
         base_preserve_payload["assurance"] = 1
 
-    contacts_id = random_form_list(contacts_result)
+    contacts_id = random_from_list(contacts_result)
     base_preserve_payload["contactsId"] = contacts_id
 
     # 高铁 2-3
-    seat_type = random_form_list(["2", "3"])
+    seat_type = random_from_list(["2", "3"])
     base_preserve_payload["seatType"] = seat_type
 
     need_consign = random_boolean()
@@ -103,8 +103,8 @@ def query_and_preserve(headers):
 
 if __name__ == '__main__':
     headers = {
-        "Cookie": "JSESSIONID=823B2652E3F5B64A1C94C924A05D80AF; YsbCaptcha=2E037F4AB09D49FA9EE3BE4E737EAFD2",
-        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZHNlX21pY3Jvc2VydmljZSIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpZCI6IjRkMmE0NmM3LTcxY2ItNGNmMS1iNWJiLWI2ODQwNmQ5ZGE2ZiIsImlhdCI6MTYyNzE5OTA0NCwiZXhwIjoxNjI3MjAyNjQ0fQ.3IIwwz7AwqHtOFDeXfih25i6_7nQBPL_K7BFxuyFiKQ",
+        "Cookie": "JSESSIONID=8E9BE1C0200062BCC222B796EAFE31E9; YsbCaptcha=5F97746467E94B3182EB52C36BEBCC62",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZHNlX21pY3Jvc2VydmljZSIsInJvbGVzIjpbIlJPTEVfVVNFUiJdLCJpZCI6IjRkMmE0NmM3LTcxY2ItNGNmMS1iNWJiLWI2ODQwNmQ5ZGE2ZiIsImlhdCI6MTY5MzE5OTIxNSwiZXhwIjoxNjkzMjAyODE1fQ.BIv3mfTjJmmKL7wRikM08BSTYhtSn3AqGlAOqCnbpKk",
         "Content-Type": "application/json"
     }
 
